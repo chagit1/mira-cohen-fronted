@@ -1,0 +1,19 @@
+{
+    "students": [
+      {
+        "id": 1,
+        "name": "Student A",
+        "behavior": "Good",
+        "academicSkills": "High",
+        "socialSkills": "Average"
+      },
+      {
+        "id": 2,
+        "name": "Student B",
+        "behavior": "Average",
+        "academicSkills": "Medium",
+        "socialSkills": "High"
+      }
+    ]
+  }
+  
