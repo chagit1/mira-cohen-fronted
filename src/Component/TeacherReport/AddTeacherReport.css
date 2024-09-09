@@ -1,0 +1,67 @@
+.report-form-wrapper {
+    border: 2px solid #ccc; /* מסגרת יפה מסביב לטופס */
+    border-radius: 15px; /* עיגול הפינות של המסגרת */
+    padding: 20px; /* ריווח פנימי */
+    width: 350px; /* רוחב הטופס */
+    margin: 20px auto; /* מיקום במרכז הדף */
+   /* box-shadow: 0px 3px 6px #00000029;  הצללה */
+    /* background-color: #f9f9f9; צבע רקע */
+  }
+.report-form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: auto;
+  }
+  
+  .report-form label {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  .report-form input, 
+  .report-form textarea, 
+  .report-form select {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 13px;
+    opacity: 1;
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    border: 1px solid #ccc; 
+    outline: none; 
+  }
+  
+  .report-form textarea {
+    height: 40px;
+    overflow: hidden;
+  }
+  
+  .report-form textarea:focus {
+    height: 150px;
+  }
+  
+  .report-form button {
+    background-color:#07E6E0;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 13px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    box-shadow: 0px 3px 6px #00000029;
+  }
+  
+  .report-form button:hover {
+    background-color:#07E6E0;
+  }
+  .label,textarea{
+    text-align: right;
+    color: #19294D;
+  }
