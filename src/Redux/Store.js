@@ -1,18 +1,22 @@
-import { produce } from 'immer';
+import { configureStore } from '@reduxjs/toolkit';
 
-import { createStore } from 'redux';
-
-const reducer = produce((state, action) => {
-
-    switch (action.type) {
-       
-        default:
-            break;
+import TeacherReportsReducer from './TeacherReport/TeacherReport.Reducer';
+import InstitutionsReducer from './Institution/Institution.Reducer';
+import HelpHoursReducer from './HelpHours/HelpHours.Reducer';
+import EligibilityAndCharacterizationsReducer from './EligibilityAndCharacterization/EligibilityAndCharacterization.Reducer';
+import UserReducer from './User/userReducer';
+import ParentReportsReducer from './ParentReport/ParentReport.Reducer';
+const store = configureStore({
+    reducer: {
+        user: UserReducer,
+        TeacherReports : TeacherReportsReducer,
+        ParentReports : ParentReportsReducer,
+        Institutions: InstitutionsReducer,
+        HelpHours : HelpHoursReducer,
+        EligibilityAndCharacterizations : EligibilityAndCharacterizationsReducer
     }
-
-}, initialState)
-
-//יצירת המחסן - מקבל את הרדיוסר
-const store = createStore(reducer)
-window.store = store;
-export default store;
+      }
+  );
+    
+  
+  export default store;
