@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {useNavigate, Outlet } from 'react-router-dom';
-import Navigate from './Component/Navigate.component';
+import Navigate from './Component/Nav/Navigate.component';
 import { Home } from './Component/Home/Home.component';
 
 const App = () => {

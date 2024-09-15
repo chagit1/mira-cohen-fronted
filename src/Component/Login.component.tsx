@@ -10,10 +10,11 @@ const Login = () => {
   const handleLogin = () => {
     // כאן תבצעי את הבדיקה מול השרת ותקבלי את סוג המשתמש
     // נניח שמחזירים סוג משתמש כדוגמה:
-    const userType = 'admain'; // לדוגמה, מנהל מוסד
+    const userType = 'admin'; // לדוגמה, מנהל מוסד
 
     // שמירת סוג המשתמש ב-localStorage
     sessionStorage.setItem('userType', userType);
+    sessionStorage.setItem('userId', "123123");
 
     // ניווט לדף הראשי שינהל את ההפניה
     navigate('/');
