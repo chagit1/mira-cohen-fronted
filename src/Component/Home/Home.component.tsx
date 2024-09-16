@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { BrowserRouter, Outlet, useNavigate } from "react-router-dom";
-import Navigate from "../Navigate.component";
+import Navigate from "../Nav/Navigate.component";
 import { Provider } from "react-redux";
 import { Routing } from "./Routing.component";
 import store from "../../Redux/Store";
@@ -19,6 +19,7 @@ export const Home = () => {
       <>
           <Provider store={store}>
             <Navigate></Navigate>
+            <Outlet></Outlet>
             <Routing></Routing>
         </Provider>
     
