@@ -1,18 +1,22 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './Component/Login.component';
-import AddStudent from './Component/AddStudent.component';
-import Navigate from './Component/Navigate.component';
+import React, { useEffect } from 'react';
+import {useNavigate, Outlet } from 'react-router-dom';
+import Navigate from './Component/Nav/Navigate.component';
+import { Home } from './Component/Home/Home.component';
 
 const App = () => {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Navigate />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/add-student" element={<AddStudent />} />  
-      </Routes>
-    </Router>
+    const navigate = useNavigate();
+  
+    // useEffect(() => {
+    //   if (!sessionStorage.getItem("userId")) {
+    //     console.log("ffff");
+        
+    //     navigate('/login');
+    //   }
+    // }, [navigate]);
+  
+    return (
+      
+    <Home></Home>
   );
 };
 

@@ -1,10 +1,18 @@
 import axios from 'axios';
 import { User } from '../Model/User.model';
-import { log } from 'console';
 
-const Url = 'https://mira-cohen-back-qv53.onrender.com/api/User/'
+axios.defaults.baseURL = process.env.APP_MIRA_COHEN;
+const apiUrl = process.env.APP_MIRA_COHEN;
+
+export const getAllUsers = () => {
+    const response =  axios.get(`${apiUrl}User`);
+    console.log(response);
+    
+    return response;
+  }
+  
+
+
 export const AddUser=(user:User)=>{
-     debugger
-     console.log(user);
-  return axios.post(`${Url}Add`, user);  
+  return axios.post(`${apiUrl}Add`, user);  
 }
