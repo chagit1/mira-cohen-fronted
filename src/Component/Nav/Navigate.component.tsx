@@ -5,9 +5,10 @@ import { getAllUsers } from '../../Api/User.api';
 const Navigate = () => {
   // const currentUserType = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserType: string } } }) => state.user.currentUser.UserType);
   // const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
-  const type = sessionStorage.getItem("userType")
+  const type = sessionStorage.getItem("role")
   const navigate = useNavigate();
   const location = useLocation();
+console.log(type);
 
 debugger
   const getGreetingMessage = () => {
@@ -21,12 +22,12 @@ debugger
       greeting = 'ערב טוב';
     }
 
-    return `${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")}, ${greeting}:)`;
+    return `${sessionStorage.getItem("userName")}, ${greeting}:)`;
   }
   useEffect(() => {
-  //   if (!sessionStorage.getItem("userId")) {
-  //     navigate('/Login');
-  //   }
+    if (!sessionStorage.getItem("userId")) {
+          navigate('/SignIn');
+        }
   // getAllUsers()
   }, []);
   return (
@@ -37,7 +38,7 @@ debugger
             <nav className='nav'>
               <ul className='nav-list'>
 
-                {type === "admin" ? (
+                {type === '0'? (
                   <>
                     {/* <li className={`nav-item ${location.pathname.includes('/allStudent') ? 'active' : ''}`}><Link to={'allStudent'}></Link></li>
                     <li className={`nav-item ${location.pathname.includes('/intitution') ? 'active' : ''}`}><Link to={'intitution'}></Link></li>
@@ -54,7 +55,7 @@ debugger
 </li>
                   </>
                 ) :
-                type === "client" ? (
+                type === '1' ? (
                   <>    
                     <p>{getGreetingMessage()}</p>
                     {/* <li className={`nav-item ${location.pathname.includes('/allStudent') ? 'active' : ''}`}><Link to={'allStudent'}></Link></li> */}
