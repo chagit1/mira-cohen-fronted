@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './nav.css';
+import { getAllUsers } from '../../Api/User.api';
 const Navigate = () => {
   // const currentUserType = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserType: string } } }) => state.user.currentUser.UserType);
   // const currentUser = useSelector((state: { user: { currentUser: { UserEmail: string, UserPassword: string, UserId: string, UserTypeId: string, UserTypeName: string, UserFirstName: string, UserLastName: string } } }) => state.user.currentUser);
@@ -22,11 +23,12 @@ debugger
 
     return `${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")}, ${greeting}:)`;
   }
-  // useEffect(() => {
+  useEffect(() => {
   //   if (!sessionStorage.getItem("userId")) {
   //     navigate('/Login');
   //   }
-  // }, [navigate]);
+  // getAllUsers()
+  }, []);
   return (
     <>
       <div id='imgandnav'>
@@ -55,7 +57,10 @@ debugger
                 type === "client" ? (
                   <>    
                     <p>{getGreetingMessage()}</p>
-                    <li className={`nav-item ${location.pathname.includes('/allStudent') ? 'active' : ''}`}><Link to={'allStudent'}></Link></li>
+                    {/* <li className={`nav-item ${location.pathname.includes('/allStudent') ? 'active' : ''}`}><Link to={'allStudent'}></Link></li> */}
+                    <li className={`nav-item ${location.pathname.includes('/allStudent') ? 'active' : ''}`}>
+  <Link to={'/allStudent'}>כל הסטודנטים</Link>
+</li>
                     </>
                 ) :
                       <p style={{ fontSize: "17px" }}>הזן פרטי גישה כדי להתחבר למערכת</p>
