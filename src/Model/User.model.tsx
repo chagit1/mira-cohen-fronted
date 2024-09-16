@@ -9,8 +9,6 @@ export interface User {
 }
 
 export enum UserRole {
-    Manager = 'Manager',
-    Client = 'Client'
-
+    Manager, Client
 }
 

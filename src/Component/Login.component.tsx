@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, TextField, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { getAllUsers } from '../Api/User.api';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -8,19 +9,24 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    // כאן תבצעי את הבדיקה מול השרת ותקבלי את סוג המשתמש
-    // נניח שמחזירים סוג משתמש כדוגמה:
-    const userType = 'admin'; // לדוגמה, מנהל מוסד
+   
+    const userType = 'client'; // לדוגמה, מנהל מוסד
 
     // שמירת סוג המשתמש ב-localStorage
     sessionStorage.setItem('userType', userType);
     sessionStorage.setItem('userId', "123123");
+    sessionStorage.setItem('firstName', "דינה");
+    sessionStorage.setItem('lastName', "לנדי");
 
     // ניווט לדף הראשי שינהל את ההפניה
     navigate('/');
   };
 
+  const handleAddUser = () => {
+      navigate('/SignOut')
+    }
   return (
+    <>
     <Container maxWidth="xs">
       <Box
         display="flex"
@@ -53,6 +59,11 @@ const Login = () => {
         </Button>
       </Box>
     </Container>
+    <button className="add-lead-button" onClick={handleAddUser}>
+          +
+          <span className='add' style={{ fontSize: 15, color: '#636363', marginLeft: '5px' }}>הרשמה</span>
+        </button>
+</>
   );
 };
 

@@ -24,9 +24,9 @@ debugger
     return `${sessionStorage.getItem("firstName")} ${sessionStorage.getItem("lastName")}, ${greeting}:)`;
   }
   useEffect(() => {
-  //   if (!sessionStorage.getItem("userId")) {
-  //     navigate('/Login');
-  //   }
+    if (!sessionStorage.getItem("userId")) {
+      navigate('/Login');
+    }
   // getAllUsers()
   }, []);
   return (
