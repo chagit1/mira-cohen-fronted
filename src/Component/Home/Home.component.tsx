@@ -11,7 +11,6 @@ export const Home = () => {
   
     // useEffect(() => {
     //   if (!sessionStorage.getItem("userId")) {
-    //     navigate('/Login');
     //   }
     // }, [navigate]);
   
