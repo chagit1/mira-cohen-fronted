@@ -1,3 +1,14 @@
 import axios from 'axios';
-axios.defaults.baseURL = process.env.APP_MIRA_COHEN;
-const apiUrl = process.env.APP_MIRA_COHEN;
+import { HelpHours } from '../Model/HelpHours.model';
+axios.defaults.baseURL = process.env.REACT_APP_MIRA_COHEN;
+const apiUrl = process.env.REACT_APP_MIRA_COHEN;
+
+export const addAdditionalHoursStudent   =  (student: HelpHours) => {
+    try {
+      const response =  axios.post(`${apiUrl}/Add`, student);
+      return response; 
+    } catch (error) {
+      console.error('Error adding student:', error);
+      throw error;
+    }
+  };

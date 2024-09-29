@@ -8,9 +8,9 @@ const Navigate = () => {
   const type = sessionStorage.getItem("role")
   const navigate = useNavigate();
   const location = useLocation();
-console.log(type);
+  console.log(type);
 
-debugger
+  debugger
   const getGreetingMessage = () => {
     const hours = new Date().getHours();
     let greeting;
@@ -27,8 +27,8 @@ debugger
   useEffect(() => {
     if (!sessionStorage.getItem("userId")) {
 
-          navigate('/SignIn');
-        }
+      navigate('/SignIn');
+    }
   }, []);
   return (
     <>
@@ -38,33 +38,33 @@ debugger
             <nav className='nav'>
               <ul className='nav-list'>
 
-                {type === '0'? (
+                {type === '0' ? (
                   <>
                     {/* <li className={`nav-item ${location.pathname.includes('/allStudent') ? 'active' : ''}`}><Link to={'allStudent'}></Link></li>
                     <li className={`nav-item ${location.pathname.includes('/intitution') ? 'active' : ''}`}><Link to={'intitution'}></Link></li>
                     <li className={`nav-item ${location.pathname.includes('/openTasks') ? 'active' : ''}`}><Link to={'openTasks'}></Link></li> */}
 
-<li className={`nav-item ${location.pathname.includes('/allStudent') ? 'active' : ''}`}>
-  <Link to={'/allStudent'}>כל הסטודנטים</Link>
-</li>
-<li className={`nav-item ${location.pathname.includes('/intitution') ? 'active' : ''}`}>
-  <Link to={'/intitution'}>מוסדות</Link>
-</li>
-<li className={`nav-item ${location.pathname.includes('/openTasks') ? 'active' : ''}`}>
-  <Link to={'/openTasks'}>משימות פתוחות</Link>
-</li>
+                    <li className={`nav-item ${location.pathname.includes('/allStudent') ? 'active' : ''}`}>
+                      <Link to={'/allStudent'}>כל הסטודנטים</Link>
+                    </li>
+                    <li className={`nav-item ${location.pathname.includes('/intitution') ? 'active' : ''}`}>
+                      <Link to={'/intitution'}>מוסדות</Link>
+                    </li>
+                    <li className={`nav-item ${location.pathname.includes('/openTasks') ? 'active' : ''}`}>
+                      <Link to={'/openTasks'}>משימות פתוחות</Link>
+                    </li>
                   </>
                 ) :
-                type === '1' ? (
-                  <>    
-                    <p>{getGreetingMessage()}</p>
-                    {/* <li className={`nav-item ${location.pathname.includes('/allStudent') ? 'active' : ''}`}><Link to={'allStudent'}></Link></li> */}
-                    <li className={`nav-item ${location.pathname.includes('/allStudent') ? 'active' : ''}`}>
-  <Link to={'/allStudent'}>כל הסטודנטים</Link>
-</li>
+                  type === '1' ? (
+                    <>
+                      <p>{getGreetingMessage()}</p>
+                      {/* <li className={`nav-item ${location.pathname.includes('/allStudent') ? 'active' : ''}`}><Link to={'allStudent'}></Link></li> */}
+                      <li className={`nav-item ${location.pathname.includes('/allStudent') ? 'active' : ''}`}>
+                        <Link to={'/allStudent'}>כל הסטודנטים</Link>
+                      </li>
                     </>
-                ) :
-                      <p style={{ fontSize: "17px" }}>הזן פרטי גישה כדי להתחבר למערכת</p>
+                  ) :
+                    <p style={{ fontSize: "17px" }}>הזן פרטי גישה כדי להתחבר למערכת</p>
                 }
               </ul>
             </nav>
