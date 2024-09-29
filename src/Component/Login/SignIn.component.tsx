@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {TextField, Container, Typography, Box, Button } from '@mui/material';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { AddUser, Login } from '../../Api/User.api';
+import Swal from 'sweetalert2';
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -11,24 +12,31 @@ const SignIn = () => {
     try{
 debugger
      const rep = Login(email,password)
-     const response = (await rep).data
-     console.log(response.user);
-     
+     const response = (await rep).data     
      sessionStorage.setItem('role', response.user.role);
      sessionStorage.setItem('userId', response.user.id);
      sessionStorage.setItem('userName', response.user.name);
-
+     Swal.fire({
+      title: 'success',
+      text: 'התחברת בהצלחה',
+      icon: 'success',
+      confirmButtonText: 'אישור',
+      customClass: {
+          confirmButton: 'my-confirm-button'
+      }
+  });
      navigate('/');
 
     }
     catch{
-      console.error();
+      Swal.fire('Error','לא קיים משתמש זה נסה שוב או הירשם', 'error');
+
     }
   
   };
 
   const handleAddUser = () => {
-    navigate('/SignOut')
+    navigate('/SignUp')
   }
   return (
   <>
