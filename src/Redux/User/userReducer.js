@@ -1,12 +1,12 @@
 import { SET_ALL_USERS } from './userAction';
 import { SET_CURRENT_USER } from './userAction';
 
-const initialState = {
+const UserState = {
   allUser: [],
   currentUser: {}
 };
 
-const UserReducer = (state = initialState, action) => {
+const UserReducer = (state = UserState, action) => {
   switch (action.type) {
     case SET_ALL_USERS:
       return {
