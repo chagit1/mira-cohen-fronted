@@ -1,22 +1,27 @@
-import { FormControl, InputLabel, MenuItem, OutlinedInput, Select, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
-import { User, UserRole } from "../../Model/User.model";
-import withReactContent from 'sweetalert2-react-content';
-import { AddUser, getAllUsers } from "../../Api/User.api";
-import { Form, useNavigate } from "react-router-dom";
+
+import React, { useState } from 'react';
+import { Stepper, Step, StepLabel, Button, TextField, Container, Box, Typography, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { AddUser } from "../../Api/User.api";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentUser, updateCurrentUser } from "../../Redux/User/userAction";
+import { setCurrentUser } from "../../Redux/User/userAction";
+import { User, UserRole } from "../../Model/User.model";
+import AddInstitutionForm from '../AddInstitution.component';
+import './SignUp.css'; // Import your CSS file here
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 interface SignOutProps {
     handleUserAdded: (newUser: User) => Promise<void>;
 }
+const steps = ['פרטי משתמש', ' פרטי מוסד', 'סיום'];
 
 const SignUp = () => {
-    debugger
     const dispatch = useDispatch();
-    const currentUser = useSelector((state: { user: { currentUser: User } }) => state.user.currentUser);
-    const MySwal = withReactContent(Swal);
     const navigate = useNavigate();
+    const [open, setOpen] = useState(true); // הפופאפ יהיה פתוח אוטומטית בשלב זה
+    const MySwal = withReactContent(Swal);
+    const [activeStep, setActiveStep] = useState(0);
+
     const [formValues, setFormValues] = useState({
         id: '',
         name: '',
@@ -24,51 +29,60 @@ const SignUp = () => {
         password: '',
         role: UserRole.Client,
     });
+
     const [errors, setErrors] = useState({
         name: '',
         email: '',
         password: '',
     });
-
-
+    const handleClose = () => {
+        setOpen(false);
+        navigate('/'); // נווט לדף הבית
+    };
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormValues(prevValues => ({
             ...prevValues,
             [name]: value,
         }));
-        setCurrentUser({
-            ...formValues,
-            [name]: value
-        });
+    };
+    //         setCurrentUser({
+    //             ...formValues,
+    //             [name]: value
+    //         });
+    //     };
+
+    const handleNext = async () => {
+        if (activeStep === 0) {
+            if (!validateFields()) {
+                return;
+            }
+            try {
+                if (formValues) {
+                    const user: User = {
+                        ...formValues
+                    }
+                    const rep = await AddUser(user);
+                    const response = rep.data;
+                    sessionStorage.setItem('role', response.role);
+                    sessionStorage.setItem('userId', response.id);
+                    sessionStorage.setItem('userName', response.name);
+                    dispatch(setCurrentUser(response));
+                    setActiveStep(prevStep => prevStep + 1); // מעבר לצעד הבא
+                }
+            } catch (error) {
+                console.error("Error adding user:", error);
+                Swal.fire('Error', ' שגיאה בהוספת המשתמש נסה שוב', 'error');
+            }
+        } else if (activeStep === 1) {
+            // מעבר לצעד השלישי
+            setActiveStep(prevStep => prevStep + 1);
+        }
     };
 
-    const handleAddUser = async (event: React.FormEvent<HTMLFormElement>) => {
-        debugger
-        event.preventDefault();
-
-        if (!validateFields()) {
-            return;
-        }
-        try {
-            if (formValues) {
-                const user: User = {
-                    ...formValues
-                }
-                const rep = await AddUser(user);
-                const response = rep.data;
-                sessionStorage.setItem('role', response.role);
-                sessionStorage.setItem('userId', response.id);
-                sessionStorage.setItem('userName', response.name);
-                dispatch(setCurrentUser(response));
-                navigate("/AddInstitution");
-            }
-        } catch (error) {
-            console.error("Error adding user:", error);
-            Swal.fire('Error', ' שגיאה בהוספת המשתמש נסה שוב', 'error');
-        }
-    }
-
+    const handleBack = () => {
+        setActiveStep(prevStep => prevStep - 1);
+    };
     const validateEmail = (email: string) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
@@ -122,75 +136,81 @@ const SignUp = () => {
 
         return Object.values(newErrors).every(error => error === '');
     };
-
     return (
-        <div>
-            <form onSubmit={handleAddUser}>
-                <TextField
-                    dir='rtl'
-                    sx={{ textAlign: 'right', fontFamily: 'CustomFont', fontSize: '20px' }}
-                    inputProps={{ style: { fontFamily: 'CustomFont' } }}
-                    InputLabelProps={{ style: { fontFamily: 'CustomFont' } }}
-                    className='textt'
-                    autoFocus
-                    margin="dense"
-                    name="name"
-                    label="שם מלא"
-                    type="text"
-                    fullWidth
-                    multiline
-                    value={formValues.name}
-                    onChange={handleChange}
-                    error={!!errors.name}
-                    helperText={errors.name}
-                />
-                <TextField
-                    inputProps={{ style: { fontFamily: 'CustomFont' } }}
-                    InputLabelProps={{ style: { fontFamily: 'CustomFont' } }}
-                    dir='rtl'
-                    sx={{ textAlign: 'right' }}
-                    className='textt'
-                    margin="dense"
-                    name="email"
-                    label="אמייל"
-                    type="email"
-                    fullWidth
-                    multiline
-                    value={formValues.email}
-                    onChange={handleChange}
-                    error={!!errors.email}
-                    helperText={errors.email}
-                />
-                <TextField
-                    inputProps={{ style: { fontFamily: 'CustomFont' } }}
-                    InputLabelProps={{ style: { fontFamily: 'CustomFont' } }}
-                    dir='rtl'
-                    sx={{ textAlign: 'right' }}
-                    className='textt'
-                    margin="dense"
-                    name="password"
-                    label="סיסמה"
-                    type="password"
-                    fullWidth
-                    multiline
-                    value={formValues.password}
-                    onChange={handleChange}
-                    error={!!errors.password}
-                    helperText={errors.password}
-                />
+        <Container maxWidth="sm" className="container">
+            <Box my={4}>
+                <Stepper activeStep={activeStep} className="stepper">
+                    {steps.map((label, index) => (
+                        <Step key={index}>
+                            <StepLabel>{label}</StepLabel>
+                        </Step>
+                    ))}
+                </Stepper>
+                {activeStep === 0 && (
+                    <form>
+                        <Typography variant="h5" className="title">הכנס פרטי משתמש</Typography>
+                        <TextField
+                            label="שם מלא"
+                            name="name"
+                            fullWidth
+                            margin="normal"
+                            value={formValues.name}
+                            onChange={handleChange}
+                            error={!!errors.name}
+                            helperText={errors.name}
+                        />
+                        <TextField
+                            label="אימייל"
+                            name="email"
+                            fullWidth
+                            margin="normal"
+                            value={formValues.email}
+                            onChange={handleChange}
+                            error={!!errors.email}
+                            helperText={errors.email}
+                        />
+                        <TextField
+                            label="סיסמה"
+                            name="password"
+                            type="password"
+                            fullWidth
+                            margin="normal"
+                            value={formValues.password}
+                            onChange={handleChange}
+                            error={!!errors.password}
+                            helperText={errors.password}
+                        />
+                        <Button variant="contained" color="primary" onClick={handleNext}>
+                            הבא
+                        </Button>
+                    </form>
+                )}
+                {activeStep === 1 && (
+                    <>
+                        <AddInstitutionForm onInstitutionAdded={() => handleNext()} />
+                    </>
+                )}
 
-                <button type="submit" className="btn-primary" style={{ marginLeft: '33%', marginTop: '6px', marginBottom: '-6px' }}>
-                    <span className="button__text">next</span>
-                    <span className="button__icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" stroke="currentColor" height="24" fill="none" className="svg">
-                            <line y2="19" y1="5" x2="12" x1="12"></line>
-                            <line y2="12" y1="12" x2="19" x1="5"></line>
-                        </svg>
-                    </span>
-                </button>
-            </form>
-        </div>
+                {activeStep === 2 && (
+                    <Dialog open={open} onClose={handleClose}>
+                        <DialogTitle className="dialog-title">נרשמת בהצלחה!</DialogTitle>
+                        <DialogContent className="dialog-content">
+                            <Typography>
+                                ההרשמה בוצעה בהצלחה. לחץ על אישור כדי לחזור לדף הבית.
+                            </Typography>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button className="button-confirm" onClick={handleClose} autoFocus>
+                                אישור
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                )}
+            </Box>
+        </Container>
     );
 };
 
 export default SignUp;
+
+

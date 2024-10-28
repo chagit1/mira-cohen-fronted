@@ -1,53 +1,48 @@
 import { useState } from 'react';
-import {TextField, Container, Typography, Box, Button } from '@mui/material';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { AddUser, Login } from '../../Api/User.api';
+import { TextField, Container, Typography, Box, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Login } from '../../Api/User.api';
 import Swal from 'sweetalert2';
+import './SignIn.css'; // קובץ CSS חיצוני לעיצוב
+
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    try{
-debugger
-     const rep = Login(email,password)
-     const response = (await rep).data     
-     sessionStorage.setItem('role', response.user.role);
-     sessionStorage.setItem('userId', response.user.id);
-     sessionStorage.setItem('userName', response.user.name);
-     Swal.fire({
-      title: 'success',
-      text: 'התחברת בהצלחה',
-      icon: 'success',
-      confirmButtonText: 'אישור',
-      customClass: {
-          confirmButton: 'my-confirm-button'
-      }
-  });
-     navigate('/');
-
+    try {
+      const rep = Login(email, password);
+      const response = (await rep).data;
+      sessionStorage.setItem('role', response.user.role);
+      sessionStorage.setItem('userId', response.user.id);
+      sessionStorage.setItem('userName', response.user.name);
+      Swal.fire({
+        title: 'התחברות הצליחה!',
+        text: 'ברוך הבא',
+        icon: 'success',
+        confirmButtonText: 'אישור',
+      });
+      navigate('/');
+    } catch {
+      Swal.fire('Error', 'משתמש לא קיים, נסה שוב או הירשם', 'error');
     }
-    catch{
-      Swal.fire('Error','לא קיים משתמש זה נסה שוב או הירשם', 'error');
-
-    }
-  
   };
 
   const handleAddUser = () => {
-    navigate('/SignUp')
-  }
+    navigate('/SignUp');
+  };
+
   return (
-  <>
-    <Container maxWidth="xs">
-      <Box
+    <Container maxWidth="sm">
+      <Box my={4}
         display="flex"
         flexDirection="column"
         justifyContent="center"
-        height="100vh"
+        height="70vh"
+        className="signin-container"
       >
-        <Typography variant="h4" component="h1" gutterBottom>
+        <Typography className="titleS" variant="h3" >
           התחברות
         </Typography>
         <TextField
@@ -57,6 +52,7 @@ debugger
           fullWidth
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className="input-field"
         />
         <TextField
           label="סיסמא"
@@ -66,20 +62,32 @@ debugger
           fullWidth
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          className="input-field"
         />
-        <Button variant="contained" color="primary" fullWidth onClick={handleLogin}>
+        <br />
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={handleLogin}
+          className="login-button"
+        >
           התחבר
         </Button>
+        <br />
+        <Button
+          className='sighnUp'
+          variant="contained"
+          color="primary"
+          onClick={handleAddUser}
+          style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }} // מרכז את הכפתור
+        >
+          אם אתה לא מחובר הירשם עכשיו
+        </Button>
       </Box>
-    </Container>
-      <button className="add-lead-button" onClick={handleAddUser}>
-        +
-        <span className='add' style={{ fontSize: 15, color: '#636363', marginLeft: '5px' }}>הרשמה</span>
-      </button>
 
-      </>
+    </Container>
   );
- 
 };
 
 export default SignIn;
