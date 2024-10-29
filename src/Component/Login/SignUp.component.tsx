@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../Redux/User/userAction";
 import { User, UserRole } from "../../Model/User.model";
 import AddInstitutionForm from '../AddInstitution.component';
-import './SignUp.css'; // Import your CSS file here
+import './SignUp.css'; 
 import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 interface SignOutProps {
@@ -18,7 +18,7 @@ const steps = ['פרטי משתמש', ' פרטי מוסד', 'סיום'];
 const SignUp = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [open, setOpen] = useState(true); // הפופאפ יהיה פתוח אוטומטית בשלב זה
+    const [open, setOpen] = useState(true);
     const MySwal = withReactContent(Swal);
     const [activeStep, setActiveStep] = useState(0);
 
@@ -37,7 +37,7 @@ const SignUp = () => {
     });
     const handleClose = () => {
         setOpen(false);
-        navigate('/'); // נווט לדף הבית
+        navigate('/')
     };
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
