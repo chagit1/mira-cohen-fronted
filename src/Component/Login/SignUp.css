@@ -1,0 +1,33 @@
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  .stepper {
+    margin-bottom: 20px;
+  }
+  
+  .title {
+    text-align: center;
+    color: #1976d2; /* כחול */
+    margin-bottom: 20px;
+  }
+  
+  .success-message {
+    text-align: center;
+    color: #1976d2; /* כחול */
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .dialog-title {
+    text-align: center;
+    color: #1976d2; /* כחול */
+  }
+  
+  .dialog-content {
+    text-align: center;
+    color: #808080; /* אפור */
+  }
+  
+ 
