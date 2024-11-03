@@ -1,0 +1,47 @@
+
+  .input-field {
+    margin-bottom: 15px;
+  }
+  
+  .login-button {
+    background-color: #1976d2; /* Blue */
+    color: white;
+    transition: background-color 0.3s;
+  }
+  
+  .login-button:hover {
+    background-color: #1565c0; /* Darker blue on hover */
+  }
+  
+  button.add-lead-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #ff9800; /* Orange */
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .add-lead-button span {
+    margin-left: 5px;
+    color: #636363; /* Gray for text */
+  }
+  
+  button.add-lead-button:hover {
+    text-decoration: underline;
+  }
+  .titleS {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .sighnUp{
+    margin-right: 20%;
+   width: 60%;
+   text-align: center;
+  }
+  .login-button{
+    margin-right: 20%;
+    width: 60%;
+    text-align: center;  }
