@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { BrowserRouter, Outlet, useNavigate } from "react-router-dom";
 import Navigate from "../Nav/Navigate.component";
 import { Provider } from "react-redux";
-import { Routing } from "./Routing.component";
 import store from "../../Redux/Store";
+import Routing from "./Routing.component";
 
 export const Home = () => {
   

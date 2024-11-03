@@ -16,7 +16,6 @@ export const addUser = (newUser) => ({
   type: 'ADD_USER',
   payload: newUser,
 });
-
 export const setCurrentUser = (user) => ({
   type: SET_CURRENT_USER,
   payload: user,

@@ -1,22 +1,26 @@
-import { BrowserRouter as Router, Route, Routes, Outlet } from 'react-router-dom';
-import Navigate from '../Nav/Navigate.component';
-import Login from '../Login.component';
-import AddStudent from '../AddStudent.component';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import SignIn from '../Login/SignIn.component';
-import SignOut from '../Login/SignOut.component';
-import { AllStudent } from '../Student/AllStudent.component';
+import SignUp from '../Login/SignUp.component';
+import AddInstitution from '../AddInstitution.component';
+import AddStudent from '../AddStudent.component';
 
-export const Routing = () => {
-    return (
-        <Routes>
-          {/* <Route path="/" element={<Navigate />} /> */}
-          <Route path="/SignIn" element={<SignIn />} />
-          <Route path="/SignOut" element={<SignOut />} />
-          <Route path="/add-student" element={<AddStudent />} />  
-          <Route path="/allStudent" element={<AllStudent />} />  
-          <Route path="/intitution" element={<AddStudent />} />  
-          <Route path="/openTasks" element={<AddStudent />} />  
-        </Routes>
-        
-    );
-  };
+const userId = 'exampleUserId'; // או השתמש ב-state או context כדי לקבל את ה-userId
+const handleInstitutionAdded = (institution: any) => {
+  console.log('Institution added:', institution);
+};
+
+const Routing: React.FC = () => {
+  return (
+    <Routes>
+      <Route path="/SignIn" element={<SignIn />} />
+      <Route path="/SignUp" element={<SignUp />} />
+      <Route path="/AddInstitution" element={<AddInstitution  onInstitutionAdded={handleInstitutionAdded} />} />
+      <Route path="/add-student" element={<AddStudent />} />
+      <Route path="/allStudent" element={<AddStudent />} />
+      <Route path="/intitution" element={<AddStudent />} />
+    </Routes>
+  );
+};
+
+export default Routing;
