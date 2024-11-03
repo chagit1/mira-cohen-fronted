@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, TextField, Container, Typography, Box } from '@mui/material';
 
-const AddStudent = () => {
+const AddStudentddd = () => {
   return (
     <Container maxWidth="sm">
       <Box my={4}>
@@ -21,4 +21,4 @@ const AddStudent = () => {
   );
 };
 
-export default AddStudent;
+export default AddStudentddd;

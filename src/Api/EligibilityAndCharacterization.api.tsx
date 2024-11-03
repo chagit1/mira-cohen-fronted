@@ -9,6 +9,6 @@ export const addEligibilityStudent = (student: EligibilityAndCharacterization) =
             birthDate: new Date(student.birthDate).toISOString(),
             familyPosition: Number(student.familyPosition)
     }
-    return axios.post(`${apiUrl}/Add`, student);
+    return axios.post(`${apiUrl}EligibilityAndCharacterization/Add`, student);
 
 }

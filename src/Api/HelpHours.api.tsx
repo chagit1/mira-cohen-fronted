@@ -5,7 +5,7 @@ const apiUrl = process.env.REACT_APP_MIRA_COHEN;
 
 export const addAdditionalHoursStudent   =  (student: HelpHours) => {
     try {
-      const response =  axios.post(`${apiUrl}/Add`, student);
+      const response =  axios.post(`${apiUrl}HelpHours/Add`, student);
       return response; 
     } catch (error) {
       console.error('Error adding student:', error);
