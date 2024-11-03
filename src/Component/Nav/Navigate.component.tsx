@@ -24,12 +24,12 @@ const Navigate = () => {
 
     return `${sessionStorage.getItem("userName")}, ${greeting}:)`;
   }
-  // useEffect(() => {
-  //   if (!sessionStorage.getItem("userId")) {
+  useEffect(() => {
+    if (!sessionStorage.getItem("userId")) {
 
-  //     navigate('/SignIn');
-  //   }
-  // }, []);
+      navigate('/SignIn');
+    }
+  }, []);
   return (
     <>
       <div id='imgandnav'>
