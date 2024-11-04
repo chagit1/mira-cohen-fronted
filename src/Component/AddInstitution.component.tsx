@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Box, Typography, TextField, Button } from '@mui/material';
 import { Institution } from '../Model/Institution.model';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { User } from '../Model/User.model';
-import { useNavigate } from 'react-router-dom';
 import { addInstitution } from '../Api/Institution.api';
+import { setCurrentUser } from '../Redux/User/userAction';
+import { AddUser } from '../Api/User.api';
 interface AddInstitutionFormProps {
-  onInstitutionAdded: (institution: Institution) => void; 
+  onInstitutionAdded: (institution: Institution) => void;
 }
 const AddInstitutionForm: React.FC<AddInstitutionFormProps> = ({ onInstitutionAdded }) => {
+
   const [institutionName, setInstitutionName] = useState('');
   const [symbol, setSymbol] = useState('');
   const [managerName, setManagerName] = useState('');
@@ -16,13 +18,14 @@ const AddInstitutionForm: React.FC<AddInstitutionFormProps> = ({ onInstitutionAd
   const [contactPhone, setContactPhone] = useState('');
   const [contactEmail, setContactEmail] = useState('');
   const [inspectorName, setInspectorName] = useState('');
-  const currentUser = useSelector((state: { user: { currentUser: User } }) => state.user.currentUser);
 
-  const navigate = useNavigate();
+  const currentUser = useSelector((state: { user: { currentUser: User } }) => state.user.currentUser);
+  const dispatch = useDispatch();
   useEffect(() => {
-    console.log("Updated currentUser:", currentUser?.email);
+    console.log("Updated currentUser:", currentUser);
 
   }, []);
+
 
   const [errors, setErrors] = useState({
     institutionName: false,
@@ -31,20 +34,34 @@ const AddInstitutionForm: React.FC<AddInstitutionFormProps> = ({ onInstitutionAd
     inspectorName: false,
     contactPhone: false,
   });
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     try {
+      debugger;
+      const rep = await AddUser(currentUser);
+      const response = rep.data;
+
+      sessionStorage.setItem('role', response.role);
+      sessionStorage.setItem('userId', response.id);
+      sessionStorage.setItem('userName', response.name);
+
+      dispatch(setCurrentUser(response));
+      console.log("currentUser", response);
+
       const institutionData: Institution = {
         id: '',
-        UserId: currentUser?.id,
+        UserId: response?.id,
         institutionName,
         symbol,
         managerName,
-        contactPerson: currentUser?.name,
+        contactPerson: response.name,
         contactPhone,
-        contactEmail: currentUser?.email,
+        contactEmail: response.email,
         inspectorName,
       };
+
       const newErrors = {
         institutionName: !institutionName,
         symbol: !symbol,
@@ -58,12 +75,24 @@ const AddInstitutionForm: React.FC<AddInstitutionFormProps> = ({ onInstitutionAd
       if (Object.values(newErrors).some(error => error)) {
         return;
       }
+      debugger
       const newInstitution = await addInstitution(institutionData);
+      console.log("newInstitution", newInstitution);
+
+      const updatedUser = {
+        ...response,
+        institutions: newInstitution
+      };
+
+      dispatch(setCurrentUser(updatedUser));
       onInstitutionAdded(newInstitution);
+      console.log("currentUser עם מוסד חדש", updatedUser);
+
     } catch (error) {
       console.error('Error adding institution:', error);
     }
   };
+
   return (
     <Container maxWidth="sm">
       <Box my={4}>
