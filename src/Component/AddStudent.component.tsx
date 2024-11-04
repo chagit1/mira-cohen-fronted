@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, TextField, Container, Typography, Box } from '@mui/material';
-
+import { useSelector } from 'react-redux';
+import { User } from '../Model/User.model';
+  
 const AddStudent = () => {
+
+  const currentUser = useSelector((state: { user: { currentUser: User } }) => state.user.currentUser);
+
+  useEffect(() => {
+    console.log("Updated currentUser:", currentUser);
+
+  }, []);
   return (
     <Container maxWidth="sm">
       <Box my={4}>
