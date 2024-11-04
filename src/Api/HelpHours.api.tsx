@@ -12,3 +12,17 @@ export const addAdditionalHoursStudent   =  (student: HelpHours) => {
       throw error;
     }
   };
+
+  export const getAllHelpHoutsStudent = () => {
+    const response =  axios.get(`${apiUrl}HelpHours`);
+    console.log(response);
+    
+    return response;
+  }
+
+  export const getAllStudent = () => {
+    const response =  axios.get(`${apiUrl}HelpHours/GetAllStudent`);
+    console.log(response);
+    
+    return response;
+  }
