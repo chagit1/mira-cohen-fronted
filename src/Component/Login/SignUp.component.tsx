@@ -1,25 +1,18 @@
-
 import React, { useState } from 'react';
 import { Stepper, Step, StepLabel, Button, TextField, Container, Box, Typography, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
-import { AddUser } from "../../Api/User.api";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { setCurrentUser } from "../../Redux/User/userAction";
-import { User, UserRole } from "../../Model/User.model";
+import { UserRole } from "../../Model/User.model";
 import AddInstitutionForm from '../AddInstitution.component';
-import './SignUp.css'; 
-import withReactContent from 'sweetalert2-react-content';
-import Swal from 'sweetalert2';
-interface SignOutProps {
-    handleUserAdded: (newUser: User) => Promise<void>;
-}
+import './SignUp.css';
+
 const steps = ['פרטי משתמש', ' פרטי מוסד', 'סיום'];
 
 const SignUp = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [open, setOpen] = useState(true);
-    const MySwal = withReactContent(Swal);
     const [activeStep, setActiveStep] = useState(0);
 
     const [formValues, setFormValues] = useState({
@@ -39,50 +32,33 @@ const SignUp = () => {
         setOpen(false);
         navigate('/')
     };
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormValues(prevValues => ({
             ...prevValues,
             [name]: value,
         }));
+        setCurrentUser({
+            ...formValues,
+            [name]: value
+        });
     };
-    //         setCurrentUser({
-    //             ...formValues,
-    //             [name]: value
-    //         });
-    //     };
 
     const handleNext = async () => {
+        debugger
         if (activeStep === 0) {
             if (!validateFields()) {
                 return;
             }
-            try {
-                if (formValues) {
-                    const user: User = {
-                        ...formValues
-                    }
-                    const rep = await AddUser(user);
-                    const response = rep.data;
-                    sessionStorage.setItem('role', response.role);
-                    sessionStorage.setItem('userId', response.id);
-                    sessionStorage.setItem('userName', response.name);
-                    dispatch(setCurrentUser(response));
-                    setActiveStep(prevStep => prevStep + 1); // מעבר לצעד הבא
-                }
-            } catch (error) {
-                console.error("Error adding user:", error);
-                Swal.fire('Error', ' שגיאה בהוספת המשתמש נסה שוב', 'error');
-            }
+            dispatch(setCurrentUser(formValues));
+            setActiveStep(prevStep => prevStep + 1);
+            
         } else if (activeStep === 1) {
-            // מעבר לצעד השלישי
             setActiveStep(prevStep => prevStep + 1);
         }
     };
 
-    const handleBack = () => {
-        setActiveStep(prevStep => prevStep - 1);
-    };
     const validateEmail = (email: string) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
