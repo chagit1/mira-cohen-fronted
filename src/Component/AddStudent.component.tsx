@@ -3,7 +3,7 @@ import { Button, TextField, Container, Typography, Box } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { User } from '../Model/User.model';
   
-const AddStudent = () => {
+const AddStudenth = () => {
 
   const currentUser = useSelector((state: { user: { currentUser: User } }) => state.user.currentUser);
 
@@ -30,4 +30,4 @@ const AddStudent = () => {
   );
 };
 
-export default AddStudent;
+export default AddStudenth;

@@ -5,7 +5,11 @@ const apiUrl = process.env.REACT_APP_MIRA_COHEN;
 
 export const addAdditionalHoursStudent   =  (student: HelpHours) => {
     try {
-      const response =  axios.post(`${apiUrl}HelpHours/Add`, student);
+      const studentToConvert = {
+        ...student!,
+        birthDate: new Date(student!.birthDate!).toISOString()
+      }
+      const response =  axios.post(`${apiUrl}HelpHours/Add`, studentToConvert);
       return response; 
     } catch (error) {
       console.error('Error adding student:', error);
