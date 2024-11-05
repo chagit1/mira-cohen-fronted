@@ -3,7 +3,6 @@ import { User } from '../Model/User.model';
 
 axios.defaults.baseURL = process.env.REACT_APP_MIRA_COHEN;
 const apiUrl = process.env.REACT_APP_MIRA_COHEN;
-// const apiUrl = 'https://localhost:7201/api/'
 
 export const getAllUsers = () => {
     const response =  axios.get(`${apiUrl}User`);
