@@ -6,6 +6,8 @@ import HelpHoursReducer from './HelpHours/HelpHours.Reducer';
 import EligibilityAndCharacterizationsReducer from './EligibilityAndCharacterization/EligibilityAndCharacterization.Reducer';
 import UserReducer from './User/userReducer';
 import ParentReportsReducer from './ParentReport/ParentReport.Reducer';
+import { Student } from '../Model/Student.model';
+import StudentsReducer from './Student/Student.Reducer';
 const store = configureStore({
     reducer: {
         user: UserReducer,
@@ -13,7 +15,8 @@ const store = configureStore({
         ParentReports : ParentReportsReducer,
         Institutions: InstitutionsReducer,
         HelpHours : HelpHoursReducer,
-        EligibilityAndCharacterizations : EligibilityAndCharacterizationsReducer
+        EligibilityAndCharacterizations : EligibilityAndCharacterizationsReducer,
+        Student: StudentsReducer
     }
       }
   );
