@@ -26,9 +26,11 @@ const Navigate = () => {
   }
   useEffect(() => {
     if (!sessionStorage.getItem("userId")) {
+
       navigate('/SignIn');
     }
     // getAllUsers()
+    
   }, []);
   return (
     <>
