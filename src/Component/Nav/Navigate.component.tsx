@@ -29,6 +29,8 @@ const Navigate = () => {
 
       navigate('/SignIn');
     }
+    // getAllUsers()
+    
   }, []);
   return (
     <>
