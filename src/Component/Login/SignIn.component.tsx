@@ -18,6 +18,7 @@ const SignIn = () => {
       sessionStorage.setItem('role', response.user.role);
       sessionStorage.setItem('userId', response.user.id);
       sessionStorage.setItem('userName', response.user.name);
+      sessionStorage.setItem('userName', response.user.name);
       Swal.fire({
         title: 'התחברות הצליחה!',
         text: 'ברוך הבא',

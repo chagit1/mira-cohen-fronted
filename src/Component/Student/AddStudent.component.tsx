@@ -1,17 +1,30 @@
 import { Box, ButtonBase, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HelpHours } from "../../Model/HelpHours.model";
 import { EligibilityAndCharacterization } from "../../Model/EligibilityAndCharacterization.model";
 import { addEligibilityStudent } from "../../Api/EligibilityAndCharacterization.api";
 import { addAdditionalHoursStudent } from "../../Api/HelpHours.api";
 import { Student } from "../../Model/Student.model";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { User } from "../../Model/User.model";
 import { useNavigate } from "react-router-dom";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
+import { addStudent } from "../../Redux/Student/Student.Action";
 
+// interface AddStudentProps {
+//     handleStudentAdded: (newStudent: Student) => Promise<void>;
+// }
+// export const AddStudent: React.FC<AddStudentProps> = (handleStudentAdded) => {
 export const AddStudent = () => {
+    // const navigate = useNavigate();
     debugger
+    const dispatch = useDispatch();
+    const allStudentState = useSelector((state: { student: { allStudent: { [key: string]: Student[] } } }) => state.student);
+    const MySwal = withReactContent(Swal);
     const currentUser = useSelector((state: { user: { currentUser: User } }) => state.user.currentUser);
+    const institutionId = sessionStorage.getItem('institutionId');
+    const [isHelpHours, setIsHelpHours] = useState<boolean>(false)
     const [formValues, setFormValues] = useState<Student>(
         {
             id: '',
@@ -25,49 +38,68 @@ export const AddStudent = () => {
             motherPhone: '',
             homePhone: '',
             address: '',
-            institutionId: currentUser?.institutions!.id,
+            institutionId: institutionId!,
             familyPosition: 0,
             gradeLevel: ''
+
         }
     );
+    const [helpHours, setHelpHours] = useState<HelpHours>()
     const [studentType, setStudentType] = useState<string>("");
+    useEffect(() => {
+        setIsHelpHours(false)
+    }, []);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormValues({
             ...formValues,
-            [name]: value!,
+            [name]: value!
         });
     };
 
     const handleStudentTypeChange = (e: SelectChangeEvent<string>) => {
+        if (e.target.value == "שעות עזר"){
+        setIsHelpHours(true)
+        }
+        else 
+        setIsHelpHours(false)
         const selectedType = e.target.value;
         setStudentType(selectedType);
         console.log(formValues);
-        
     };
+
     const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        console.log(formValues);
 
         if (studentType == 'שעות עזר') {
-            const helpHours: HelpHours = {
+            setHelpHours({
                 ...formValues,
                 strengthAreas: '',
                 areasForImprovement: '',
                 academicAchievements: ''
-            }
-            console.log("ff",helpHours);
+            })
             debugger
-            addAdditionalHoursStudent(helpHours)
+            addAdditionalHoursStudent(helpHours!)
                 .then((x) => {
-                    alert("success");
-                    console.log(x.data)
+                    dispatch(addStudent(x.data))
+                   
+                    MySwal.fire({
+                        title: 'success',
+                        text: 'התלמיד נוסף בהצלחה',
+                        icon: 'success',
+                        confirmButtonText: 'אישור',
+                        customClass: {
+                            confirmButton: 'my-confirm-button'
+                        }
+                    });
                 })
                 .catch(err => {
-                    console.log(err);
+                    Swal.fire('Error', 'שגיאה בהוספת הליד', 'error');
                 });
         }
         else {
+            setIsHelpHours(false)
             const eligibility: EligibilityAndCharacterization = {
                 ...formValues!,
                 diagnosis: '',
@@ -80,8 +112,7 @@ export const AddStudent = () => {
                 parentReport: {},
                 teacherReport: {},
             }
-            console.log("gf",eligibility);
-debugger
+            debugger
             addEligibilityStudent(eligibility)
                 .then((x) => {
                     alert("success");
@@ -92,6 +123,15 @@ debugger
                 });
         }
 
+    };
+
+    const handleChangeHelpHours = (e: React.ChangeEvent<HTMLInputElement>) => {
+        debugger
+        const { name, value } = e.target;
+        setHelpHours({
+            ...helpHours!,
+            [name]: value!,
+        });
     };
     return <>
         <div>
@@ -215,9 +255,41 @@ debugger
                         onChange={handleStudentTypeChange}
                         fullWidth
                     >
-                        <MenuItem value="זכאות ואפיון">זכאות ואפיון</MenuItem>
+                        <MenuItem value="זכאות ואפיון" >זכאות ואפיון</MenuItem>
                         <MenuItem value="שעות עזר">שעות עזר</MenuItem>
                     </Select>
+                    { isHelpHours == true ? (
+                        <>
+                    <TextField
+                        margin="dense"
+                        name="strengthAreas"
+                        label="חוזקות"
+                        type="text"
+                        fullWidth
+                        value={helpHours?.strengthAreas || ''}
+                        onChange={handleChangeHelpHours}
+                    />
+                    <TextField
+                        margin="dense"
+                        name="areasForImprovement"
+                        label="מוקדים לחיזוק "
+                        type="text"
+                        fullWidth
+                        value={helpHours?.areasForImprovement || ''}
+                        onChange={handleChangeHelpHours}
+                    />
+                    <TextField
+                        margin="dense"
+                        name="academicAchievements"
+                        label="הישגים לימודיים "
+                        type="text"
+                        fullWidth
+                        value={helpHours?.academicAchievements || ''}
+                        onChange={handleChangeHelpHours}
+                    />
+                    </>
+                    ): <></>
+                 };
                     <ButtonBase className="btn-primary" type='submit' >
                         <span className="button__text">{'הוסף'}</span>
                         <span className="button__icon"></span>

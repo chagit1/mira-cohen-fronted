@@ -18,6 +18,7 @@ const AddInstitutionForm: React.FC<AddInstitutionFormProps> = ({ onInstitutionAd
   const [contactPhone, setContactPhone] = useState('');
   const [contactEmail, setContactEmail] = useState('');
   const [inspectorName, setInspectorName] = useState('');
+  const userID = sessionStorage.getItem('userId');
 
   const currentUser = useSelector((state: { user: { currentUser: User } }) => state.user.currentUser);
   const dispatch = useDispatch();
@@ -44,9 +45,9 @@ const AddInstitutionForm: React.FC<AddInstitutionFormProps> = ({ onInstitutionAd
       const response = rep.data;
 
       sessionStorage.setItem('role', response.role);
-      sessionStorage.setItem('userId', response.id);
       sessionStorage.setItem('userName', response.name);
-
+      sessionStorage.setItem('userId', response.id);
+      
       dispatch(setCurrentUser(response));
       console.log("currentUser", response);
 
@@ -78,7 +79,7 @@ const AddInstitutionForm: React.FC<AddInstitutionFormProps> = ({ onInstitutionAd
       debugger
       const newInstitution = await addInstitution(institutionData);
       console.log("newInstitution", newInstitution);
-
+      sessionStorage.setItem('institutionId', newInstitution.id);
       const updatedUser = {
         ...response,
         institutions: newInstitution
