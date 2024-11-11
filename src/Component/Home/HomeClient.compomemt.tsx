@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import store from "../../Redux/Store";
 import Routing from "./Routing.component";
 
-export const Home = () => {
+export const HomeClient = () => {
   
     const navigate = useNavigate();
   

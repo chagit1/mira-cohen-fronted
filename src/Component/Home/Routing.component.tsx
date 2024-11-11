@@ -4,6 +4,7 @@ import SignIn from '../Login/SignIn.component';
 import SignUp from '../Login/SignUp.component';
 import AddInstitution from '../AddInstitution.component';
 import AddStudent from '../AddStudent.component';
+import { AllStudent } from '../Student/AllStudent.component';
 
 import Manager from '../Manager.component';
 
@@ -21,6 +22,8 @@ const Routing: React.FC = () => {
       <Route path="/add-student" element={<AddStudent />} />
       <Route path="/allStudent" element={<AddStudent />} />
       <Route path="/intitution" element={<Manager />} />
+      <Route path="/allStudent" element={<AllStudent />} />
+      <Route path="/intitution" element={<AddStudent />} />
     </Routes>
   );
 };

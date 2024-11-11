@@ -11,7 +11,7 @@ export interface User {
 }
 
 export enum UserRole {
-    Manager ,Client 
+    Manager, Client
 }
   export interface UserState {
     allUser: User[];
