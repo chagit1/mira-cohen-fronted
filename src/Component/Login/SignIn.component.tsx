@@ -25,9 +25,7 @@ const SignIn = () => {
       sessionStorage.setItem('userName', response.user.name);
       dispatch(setCurrentUser(response));
       console.log(response);
-      
-
-      Swal.fire({
+            Swal.fire({
         title: 'התחברות הצליחה!',
         text: 'ברוך הבא',
         icon: 'success',
