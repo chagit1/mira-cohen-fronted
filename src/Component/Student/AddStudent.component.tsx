@@ -10,7 +10,7 @@ import { User } from "../../Model/User.model";
 import { useNavigate } from "react-router-dom";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-import { addStudent } from "../../Redux/Student/Student.Action";
+import { addStudent, setAllStudents } from "../../Redux/Student/Student.Action";
 
 // interface AddStudentProps {
 //     handleStudentAdded: (newStudent: Student) => Promise<void>;
@@ -23,8 +23,9 @@ export const AddStudent = () => {
     const allStudentState = useSelector((state: { student: { allStudent: { [key: string]: Student[] } } }) => state.student);
     const MySwal = withReactContent(Swal);
     const currentUser = useSelector((state: { user: { currentUser: User } }) => state.user.currentUser);
-    const institutionId = sessionStorage.getItem('institutionId');
+    const institutionId = sessionStorage.getItem('6728eb41c805ab07e544eb4b');
     const [isHelpHours, setIsHelpHours] = useState<boolean>(false)
+    const [studentType, setStudentType] = useState<string>("");
     const [formValues, setFormValues] = useState<Student>(
         {
             id: '',
@@ -38,16 +39,36 @@ export const AddStudent = () => {
             motherPhone: '',
             homePhone: '',
             address: '',
-            institutionId: institutionId!,
+            institutionId: '6728eb41c805ab07e544eb4b',
             familyPosition: 0,
             gradeLevel: ''
 
         }
     );
-    const [helpHours, setHelpHours] = useState<HelpHours>()
-    const [studentType, setStudentType] = useState<string>("");
+    const [helpHours, setHelpHours] = useState<HelpHours>(
+        {
+            ...formValues,
+            strengthAreas: '',
+            areasForImprovement: '',
+            academicAchievements: ''
+        })
+    const [eligibility, setEligibility] = useState<EligibilityAndCharacterization>(
+        {
+            ...formValues!,
+            diagnosis: '',
+            medicalDocuments: '',
+            syncWithDiagnosis: false,
+            managerSignature: false,
+            teacherSignature: false,
+            supervisorSignature: false,
+            uploadedToShiluvit: false,
+            parentReport: {},
+            teacherReport: {},
+        })
+
     useEffect(() => {
         setIsHelpHours(false)
+
     }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,15 +76,23 @@ export const AddStudent = () => {
         setFormValues({
             ...formValues,
             [name]: value!
-        });
+        })
+        setEligibility({
+            ...eligibility,
+            [name]: value!
+        })
+        setHelpHours({
+            ...helpHours,
+            [name]: value!
+        })
     };
 
     const handleStudentTypeChange = (e: SelectChangeEvent<string>) => {
-        if (e.target.value == "שעות עזר"){
-        setIsHelpHours(true)
+        if (e.target.value == "שעות עזר") {
+            setIsHelpHours(true)
         }
-        else 
-        setIsHelpHours(false)
+        else
+            setIsHelpHours(false)
         const selectedType = e.target.value;
         setStudentType(selectedType);
         console.log(formValues);
@@ -71,19 +100,10 @@ export const AddStudent = () => {
 
     const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-
         if (studentType == 'שעות עזר') {
-            setHelpHours({
-                ...formValues,
-                strengthAreas: '',
-                areasForImprovement: '',
-                academicAchievements: ''
-            })
-            debugger
             addAdditionalHoursStudent(helpHours!)
                 .then((x) => {
-                    dispatch(addStudent(x.data))
-                   
+                    dispatch(setAllStudents(x.data))
                     MySwal.fire({
                         title: 'success',
                         text: 'התלמיד נוסף בהצלחה',
@@ -95,44 +115,32 @@ export const AddStudent = () => {
                     });
                 })
                 .catch(err => {
-                    Swal.fire('Error', 'שגיאה בהוספת הליד', 'error');
+                    Swal.fire('Error', 'שגיאה בהוספת התלמיד', 'error');
                 });
         }
         else {
             setIsHelpHours(false)
-            const eligibility: EligibilityAndCharacterization = {
-                ...formValues!,
-                diagnosis: '',
-                medicalDocuments: '',
-                syncWithDiagnosis: false,
-                managerSignature: false,
-                teacherSignature: false,
-                supervisorSignature: false,
-                uploadedToShiluvit: false,
-                parentReport: {},
-                teacherReport: {},
-            }
             debugger
             addEligibilityStudent(eligibility)
                 .then((x) => {
-                    alert("success");
-                    console.log(x.data)
+                    dispatch(addStudent(x.data))
+                    MySwal.fire({
+                        title: 'success',
+                        text: 'התלמיד נוסף בהצלחה',
+                        icon: 'success',
+                        confirmButtonText: 'אישור',
+                        customClass: {
+                            confirmButton: 'my-confirm-button'
+                        }
+                    });
                 })
                 .catch(err => {
-                    console.log(err);
+                    Swal.fire('Error', 'שגיאה בהוספת התלמיד', 'error');
                 });
         }
 
     };
 
-    const handleChangeHelpHours = (e: React.ChangeEvent<HTMLInputElement>) => {
-        debugger
-        const { name, value } = e.target;
-        setHelpHours({
-            ...helpHours!,
-            [name]: value!,
-        });
-    };
     return <>
         <div>
             <form onSubmit={handleFormSubmit}>
@@ -258,38 +266,38 @@ export const AddStudent = () => {
                         <MenuItem value="זכאות ואפיון" >זכאות ואפיון</MenuItem>
                         <MenuItem value="שעות עזר">שעות עזר</MenuItem>
                     </Select>
-                    { isHelpHours == true ? (
+                    {isHelpHours == true ? (
                         <>
-                    <TextField
-                        margin="dense"
-                        name="strengthAreas"
-                        label="חוזקות"
-                        type="text"
-                        fullWidth
-                        value={helpHours?.strengthAreas || ''}
-                        onChange={handleChangeHelpHours}
-                    />
-                    <TextField
-                        margin="dense"
-                        name="areasForImprovement"
-                        label="מוקדים לחיזוק "
-                        type="text"
-                        fullWidth
-                        value={helpHours?.areasForImprovement || ''}
-                        onChange={handleChangeHelpHours}
-                    />
-                    <TextField
-                        margin="dense"
-                        name="academicAchievements"
-                        label="הישגים לימודיים "
-                        type="text"
-                        fullWidth
-                        value={helpHours?.academicAchievements || ''}
-                        onChange={handleChangeHelpHours}
-                    />
-                    </>
-                    ): <></>
-                 };
+                            <TextField
+                                margin="dense"
+                                name="strengthAreas"
+                                label="חוזקות"
+                                type="text"
+                                fullWidth
+                                value={helpHours?.strengthAreas || ''}
+                                onChange={handleChange}
+                            />
+                            <TextField
+                                margin="dense"
+                                name="areasForImprovement"
+                                label="מוקדים לחיזוק "
+                                type="text"
+                                fullWidth
+                                value={helpHours?.areasForImprovement || ''}
+                                onChange={handleChange}
+                            />
+                            <TextField
+                                margin="dense"
+                                name="academicAchievements"
+                                label="הישגים לימודיים "
+                                type="text"
+                                fullWidth
+                                value={helpHours?.academicAchievements || ''}
+                                onChange={handleChange}
+                            />
+                        </>
+                    ) : <></>
+                    };
                     <ButtonBase className="btn-primary" type='submit' >
                         <span className="button__text">{'הוסף'}</span>
                         <span className="button__icon"></span>
