@@ -8,6 +8,8 @@ import { AllStudent } from '../Student/AllStudent.component';
 import Navigate from '../Nav/Navigate.component';
 import Student from '../Student/Student.component';
 
+import Manager from '../Manager.component';
+
 const userId = 'exampleUserId'; // או השתמש ב-state או context כדי לקבל את ה-userId
 const handleInstitutionAdded = (institution: any) => {
   console.log('Institution added:', institution);
@@ -20,6 +22,8 @@ const Routing: React.FC = () => {
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/AddInstitution" element={<AddInstitution  onInstitutionAdded={handleInstitutionAdded} />} />
       <Route path="/add-student" element={<AddStudent />} />
+      <Route path="/allStudent" element={<AddStudent />} />
+      <Route path="/intitution" element={<Manager />} />
       <Route path="/allStudent" element={<AllStudent />} />
       <Route path="/intitution" element={<AddStudent />} />
       <Route path="/student" element={<Student />} />

@@ -5,10 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import { Login } from '../../Api/User.api';
 import Swal from 'sweetalert2';
 import './SignIn.css'; 
+import { useDispatch, useSelector } from 'react-redux';
+import { User } from '../../Model/User.model';
+import { setCurrentUser } from '../../Redux/User/userAction';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const currentUser = useSelector((state: { user: { currentUser: User } }) => state.user.currentUser);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -18,8 +23,9 @@ const SignIn = () => {
       sessionStorage.setItem('role', response.user.role);
       sessionStorage.setItem('userId', response.user.id);
       sessionStorage.setItem('userName', response.user.name);
-      sessionStorage.setItem('userName', response.user.name);
-      Swal.fire({
+      dispatch(setCurrentUser(response));
+      console.log(response);
+            Swal.fire({
         title: 'התחברות הצליחה!',
         text: 'ברוך הבא',
         icon: 'success',
@@ -82,7 +88,7 @@ const SignIn = () => {
           variant="contained"
           color="primary"
           onClick={handleAddUser}
-          style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }} // מרכז את הכפתור
+          style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block' }}
         >
           אם אתה לא מחובר הירשם עכשיו
         </Button>
