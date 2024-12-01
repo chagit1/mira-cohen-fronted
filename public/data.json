@@ -14,6 +14,30 @@
         "academicSkills": "Medium",
         "socialSkills": "High"
       }
-    ]
+    ],
+    "parentReport":
+    {
+      "strengthArea": "אזורי כוח",
+      "birthProcessAndEarlyDevelopment": "תהליך לידה והתפתחות מוקדמת",
+      "weaning": "גמילה",
+      "preSchoolEducation": "חינוך קדם בית ספרי",
+      "ParamedicalSupport": "תמיכה פרא-רפואית",
+      "PreSchoolDifficulties": "קשיים בגיל הרך",
+      "elementaryEducation": "חינוך יסודי",
+      "readingAndWritingDevelopment": "התפתחות קריאה וכתיבה",
+      "understandingInstructions": "הבנת הוראות",
+      "elementarySchoolDifficulties": "קשיים בבית ספר יסודי",
+      "academicDifficulties": "קשיים לימודיים",
+      "socialAndEmotionalDifficulties": "קשיים חברתיים ורגשיים",
+      "wasWithoutFramework": "היה ללא מסגרת",
+      "currentAcademicStatus": "מצב לימודי נוכחי",
+      "currentReadingGap": "פערים בקריאה",
+      "currentWritingGap": "פערים בכתיבה",
+      "currentMotivationGap": "פער נוכחי במוטיבציה",
+      "currentSocialGap": "פערים חברתים",
+      "currentEmotionalGap": "פערים רגשים",
+      "currentCulturalAndLeisureGap": "פערים בתרבות ופנאי"
+    }
+    
   }
   

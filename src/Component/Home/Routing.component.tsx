@@ -6,7 +6,8 @@ import AddInstitution from '../AddInstitution.component';
 import AddStudent from '../AddStudent.component';
 import { AllStudent } from '../Student/AllStudent.component';
 import Navigate from '../Nav/Navigate.component';
-import Student from '../Student/Student.component';
+import ParentReportComponent from '../Student/ParentReport.component';
+import TeacherReportComponent from '../Student/TeacherReportComponent.component';
 
 import Manager from '../Manager.component';
 
@@ -26,8 +27,8 @@ const Routing: React.FC = () => {
       <Route path="/intitution" element={<Manager />} />
       <Route path="/allStudent" element={<AllStudent />} />
       <Route path="/intitution" element={<AddStudent />} />
-      <Route path="/student" element={<Student />} />
-
+      <Route path="/parentReport" element={<ParentReportComponent />} />
+      <Route path="/teacherReport" element={< TeacherReportComponent/>} />
     </Routes>
   );
 };

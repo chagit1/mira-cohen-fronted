@@ -11,13 +11,9 @@ import { useNavigate } from "react-router-dom";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import { addStudent, setAllStudents } from "../../Redux/Student/Student.Action";
+import { FamilyStatus } from "../../Model/TeacherReport.model";
 
-// interface AddStudentProps {
-//     handleStudentAdded: (newStudent: Student) => Promise<void>;
-// }
-// export const AddStudent: React.FC<AddStudentProps> = (handleStudentAdded) => {
 export const AddStudent = () => {
-    // const navigate = useNavigate();
     debugger
     const dispatch = useDispatch();
     const allStudentState = useSelector((state: { student: { allStudent: { [key: string]: Student[] } } }) => state.student);
@@ -62,8 +58,44 @@ export const AddStudent = () => {
             teacherSignature: false,
             supervisorSignature: false,
             uploadedToShiluvit: false,
-            parentReport: {},
-            teacherReport: {},
+            parentReport:{
+                parentReportId: "",
+                studentId: "",
+                strengthArea: "",
+                birthProcessAndEarlyDevelopment: "",
+                weaning: "",
+                preSchoolEducation: "",
+                ParamedicalSupport: "",
+                PreSchoolDifficulties: "",
+                elementaryEducation: "",
+                readingAndWritingDevelopment: "",
+                understandingInstructions: "",
+                elementarySchoolDifficulties: "",
+                academicDifficulties: "",
+                socialAndEmotionalDifficulties: "",
+                wasWithoutFramework: false,
+                currentAcademicStatus: "",
+                currentReadingGap: "",
+                currentWritingGap: "",
+                currentMotivationGap: "",
+                currentSocialGap: "",
+                currentEmotionalGap: "",
+                currentCulturalAndLeisureGap: ""
+            },
+            teacherReport: {
+                id: "",
+                studentId: "",
+                readingAndWritingSkills: "",
+                academicGap: "",
+                understandingOfTheMaterial: "",
+                memory: "",
+                generalKnowledge: "",
+                motivation: "",
+                vocabulary: "",
+                academicAchievements: "",
+                socialAndEmotionalConduct: "",
+                familyStatus: FamilyStatus.Married
+            },
         })
 
     useEffect(() => {
@@ -297,7 +329,7 @@ export const AddStudent = () => {
                             />
                         </>
                     ) : <></>
-                    };
+                    }
                     <ButtonBase className="btn-primary" type='submit' >
                         <span className="button__text">{'הוסף'}</span>
                         <span className="button__icon"></span>

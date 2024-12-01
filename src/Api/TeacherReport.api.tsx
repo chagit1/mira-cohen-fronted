@@ -1,3 +1,14 @@
 import axios from 'axios';
-axios.defaults.baseURL = process.env.APP_MIRA_COHEN;
-const apiUrl = process.env.APP_MIRA_COHEN;
+import { TeacherReport } from '../Model/TeacherReport.model';
+axios.defaults.baseURL = process.env.REACT_APP_MIRA_COHEN;
+const apiUrl = process.env.REACT_APP_MIRA_COHEN;
+
+export const addTeacherReport = (teacherReport: TeacherReport) => {
+    debugger
+    return axios.post(`${apiUrl}TeacherReport/Add`, teacherReport);
+}
+export const updateTeacherReport = (teacherReport: TeacherReport) => {
+    debugger
+    const x = axios.put(`${apiUrl}TeacherReport/Update`, teacherReport);
+    return x;
+}
