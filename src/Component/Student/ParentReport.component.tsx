@@ -235,6 +235,7 @@ const ParentReportComponent: React.FC = () => {
             borderRadius: "8px",
             fontSize: "16px",
           }}
+          
         >
           שמור
         </Button>
