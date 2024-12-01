@@ -26,8 +26,8 @@ export class EligibilityAndCharacterization extends Student {
     teacherSignature: boolean;
     supervisorSignature: boolean;
     uploadedToShiluvit: boolean;
-    parentReport: ParentReport;
-    teacherReport: TeacherReport;
+    parentReport : ParentReport;
+    teacherReport : TeacherReport;
 
     constructor(
         id: string,
