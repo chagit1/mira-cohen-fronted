@@ -1,23 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { Collapse, Typography, TableRow, TableCell, Grid, Box } from "@mui/material";
+import { Collapse, Typography, TableRow, TableCell, Grid, Box, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 interface StudentDetailsProps {
   student: { [key: string]: any };
+
   isOpen: boolean;
 }
 
 const StudentDetails: React.FC<StudentDetailsProps> = ({ student, isOpen }) => {
   const [isHelpHours, setIsHelpHours] = useState<boolean>(false)
   const [studentType, setStudentType] = useState<string>("");
-
+  const nav = useNavigate()
   useEffect(() => {
     if ("strengthAreas" in student)
       setStudentType("שעות עזר")
     else
       setStudentType("זכאות ואפיון")
   }, []);
-
-
+  const toParentReport = () =>  {
+    
+    nav('/parentReport', { state: { student } })
+  }
+  const toTeacherReport = () =>  {
+    nav('/teacherReport' , { state: { student } })
+  }
   return (
     <Collapse in={isOpen} timeout="auto" unmountOnExit>
       <Box
@@ -40,7 +47,6 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ student, isOpen }) => {
               <Typography>
                 <strong>תחומי חוזק:</strong> {student.strengthAreas}
               </Typography>
-              נ
               <Typography>
                 <strong>תחומים לשיפור:</strong> {student.areasForImprovement}
               </Typography>
@@ -50,7 +56,13 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ student, isOpen }) => {
             </>
           ) : (
             <>
-
+            
+             <Typography>
+               <Button onClick={toParentReport}>דוח הורים</Button>
+              </Typography>
+              <Typography>
+               <Button onClick={toTeacherReport}>דוח מחנך</Button>
+              </Typography>
             </>
           )}
 

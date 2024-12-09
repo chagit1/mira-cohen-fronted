@@ -1,20 +1,18 @@
 {
-  "students": [
-    {
-      "id": 1,
-      "name": "Student A",
-      "behavior": "Good",
-      "academicSkills": "High",
-      "socialSkills": "Average"
-    },
-    {
-      "id": 2,
-      "name": "Student B",
-      "behavior": "Average",
-      "academicSkills": "Medium",
-      "socialSkills": "High"
-    }
-  ],
+  "student":{
+    "firstName": "שם פרטי",
+    "lastName": "שם משפחה",
+    "birthDate": "תאריך לידה",
+    "tz": "תעודת זהות",
+    "fatherName": "שם האב",
+    "motherName": "שם האם",
+    "fatherPhone": "טלפון האב",
+    "motherPhone": "טלפון האם",
+    "homePhone": "טלפון בית",
+    "address": "כתובת",
+    "familyPosition": "מיקום במשפחה",
+    "gradeLevel": "שכבת כיתה"
+  },
   "parentReport": {
     "strengthArea": "אזורי כוח",
     "birthProcessAndEarlyDevelopment": "תהליך לידה והתפתחות מוקדמת",
@@ -47,7 +45,5 @@
     "vocabulary": "אוצר מילים",
     "academicAchievements": "הישגים לימוגיים",
     "socialAndEmotionalConduct": "התנהגות רגשית וחברתית"
-    
-  
   }
 }

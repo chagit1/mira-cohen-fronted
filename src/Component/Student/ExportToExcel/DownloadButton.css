@@ -1,0 +1,27 @@
+/* מיכל כפתור */
+.download-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px; /* מרווח מעל הכפתור */
+}
+
+/* עיצוב הכפתור */
+.download-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px; /* יותר מרווח פנימי */
+    background-color: #4F81BD; /* כחול בהיר */
+    color: #ffffff;
+    border: none;
+    border-radius: 50%; /* מעגל כדי להפוך את הכפתור לעגלגל */
+    font-size: 24px; /* גודל האייקון */
+}
+
+
+.download-icon {
+    font-size: 28px; /* גודל האייקון */
+}
+
+

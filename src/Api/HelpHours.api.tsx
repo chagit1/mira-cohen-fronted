@@ -30,3 +30,20 @@ export const addAdditionalHoursStudent   =  (student: HelpHours) => {
     
     return response;
   }
+
+  export const updateAdditionalHoursStudent   =  (student: HelpHours) => {
+    try {
+      const studentToConvert = {
+        ...student!,
+        birthDate: new Date(student!.birthDate!).toISOString()
+      }
+      debugger
+      const response =  axios.put(`${apiUrl}HelpHours/Update`, studentToConvert);
+      console.log("r",response);
+      
+      return response; 
+    } catch (error) {
+      console.error('Error update student:', error);
+      throw error;
+    }
+  };

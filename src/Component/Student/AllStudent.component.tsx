@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 import ReactDOM from 'react-dom';
-import { AddStudent } from "./AddStudent.component";
+import { AddStudent } from "./AddStudents/AddStudent.component";
 import { Box, Button, Checkbox, Collapse, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { AddIcCallOutlined, AutoDeleteOutlined, ChevronLeft, ChevronRight, DeleteForeverRounded, DeleteOutline, DeleteOutlineRounded, DeleteSharp, DeleteSweep, DisplaySettings, Edit, EditNotifications, EditOutlined, ExpandMore, PlusOneOutlined, Remove } from "@mui/icons-material";
@@ -22,6 +22,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { deleteStudentApi } from "../../Api/Student.api";
 import StudentDetails from "./StudentDetails.component";
+import ExportAllStudentToExcel from "./ExportToExcel/ExportAllStudentToExcel.component";
+import { UpdateStudent } from "./UpdateStudent.component";
 
 export const AllStudent = () => {
     const dispatch = useDispatch();
@@ -137,6 +139,28 @@ export const AllStudent = () => {
             });
     };
 
+    const handleUpdateStudent = (student:Student) => {
+        debugger
+        Swal.fire({
+            title: 'עדכון תלמיד',
+            html: '<div id="add-student"></div>',
+            showCloseButton: true,
+            showCancelButton: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                const container = document.getElementById('add-student');
+                if (container) {
+                    ReactDOM.render(
+                        <Provider store={store}>
+                            <UpdateStudent student={student}></UpdateStudent>,
+                            {/* // <ProviderWrapper userId={userId} />, */}
+                        </Provider>,
+                        container
+                    );
+                }
+            }
+        })
+    }
     const getStudentType = (student: any): string => {
         return "strengthAreas" in student ? 'שעות עזר' : 'זכאות ואפיון';
     };
@@ -204,6 +228,7 @@ export const AllStudent = () => {
                     >
                         הוספת תלמיד
                     </Button>
+                    <ExportAllStudentToExcel></ExportAllStudentToExcel>
                 </Box>
 
                 <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: 3 }}>
@@ -228,7 +253,8 @@ export const AllStudent = () => {
                                 <React.Fragment key={student.id}>
                                     <TableRow hover>
                                         <TableCell align="right">
-                                            <IconButton color="primary" aria-label="ערוך תלמיד">
+                                            <IconButton color="primary" aria-label="ערוך תלמיד"
+                                            onClick={()=>handleUpdateStudent(student)}>
                                                 <EditIcon />
                                             </IconButton>                                            
                                             <IconButton color="error" aria-label="מחק תלמיד" onClick={() => handleDeleteStudent(student.id)}>
