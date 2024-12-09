@@ -118,16 +118,15 @@ const ParentReportComponent: React.FC = () => {
     }
     console.log("Saved report:", report);
     setEditable(false);
-
-    
-
   };
+
   const handleAccordionChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
     setAccordionStates((prev) => ({
       ...prev,
       [panel]: isExpanded,
     }));
   };
+  
   return (
     <div style={{ margin: "20px auto", maxWidth: "90%", fontFamily: "Arial, sans-serif" }}>
       <Typography variant="h4" style={{ marginBottom: "10px", textAlign: "center", color: "#333" }}>
@@ -156,7 +155,7 @@ const ParentReportComponent: React.FC = () => {
 
       {report && (
         <div
-          style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}
+          style={{ display: "grid", gridTemplateColumns: "50% 50%", gap: "20px" }}
         >
           {Object.entries(parentReportTranslations).map(([key, value]) => (
             <Accordion

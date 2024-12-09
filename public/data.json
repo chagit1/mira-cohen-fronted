@@ -1,4 +1,18 @@
 {
+  "student":{
+    "firstName": "שם פרטי",
+    "lastName": "שם משפחה",
+    "birthDate": "תאריך לידה",
+    "tz": "תעודת זהות",
+    "fatherName": "שם האב",
+    "motherName": "שם האם",
+    "fatherPhone": "טלפון האב",
+    "motherPhone": "טלפון האם",
+    "homePhone": "טלפון בית",
+    "address": "כתובת",
+    "familyPosition": "מיקום במשפחה",
+    "gradeLevel": "שכבת כיתה"
+  },
     "students": [
       {
         "id": 1,
