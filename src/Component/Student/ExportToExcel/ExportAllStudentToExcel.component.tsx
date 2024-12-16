@@ -15,7 +15,7 @@ const ExportAllStudentToExcel = () => {
     const allStudentState = useSelector((state: { student: { allStudent: { [key: string]: Student[] } } }) => state.student);
     const dispatch = useDispatch();
     const [students, setStudents] = useState<Student[]>([]);
-    const parentReportTranslations = data.student;
+    const studentTranslations = data.student;
 
     useEffect(() => {
         if (allStudentState == undefined) {
@@ -42,7 +42,7 @@ const ExportAllStudentToExcel = () => {
         const worksheet = workbook.addWorksheet('Students');
 
         // הוספת כותרות
-        const headerRow = Object.values(parentReportTranslations);
+        const headerRow = Object.values(studentTranslations);
         worksheet.addRow(headerRow);
 
         worksheet.columns = headerRow.map((header) => ({
@@ -71,10 +71,10 @@ const ExportAllStudentToExcel = () => {
 
         // הוספת נתוני סטודנטים
         students.forEach((student, index) => {
-            const rowData = Object.keys(parentReportTranslations).map((key) => {
+            const rowData = Object.keys(studentTranslations).map((key) => {
                 const studentKey = key as keyof Student;
                 if (key.toLowerCase().includes('birth') || key.toLowerCase().includes('date')) {
-                    const date = new Date(student[studentKey]);
+                    const date = new Date(student?.birthDate!);
                     if (!isNaN(date.getTime())) {
                         return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')
                             }/${date.getFullYear()}`;

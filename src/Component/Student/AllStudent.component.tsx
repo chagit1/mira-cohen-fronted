@@ -24,6 +24,8 @@ import { deleteStudentApi } from "../../Api/Student.api";
 import StudentDetails from "./StudentDetails.component";
 import ExportAllStudentToExcel from "./ExportToExcel/ExportAllStudentToExcel.component";
 import { UpdateStudent } from "./UpdateStudent.component";
+import AddStudentsFromExcel from "./AddStudents/AddStudentsFromExcel.component";
+import moment from "moment";
 
 export const AllStudent = () => {
     const dispatch = useDispatch();
@@ -139,7 +141,7 @@ export const AllStudent = () => {
             });
     };
 
-    const handleUpdateStudent = (student:Student) => {
+    const handleUpdateStudent = (student: Student) => {
         debugger
         Swal.fire({
             title: 'עדכון תלמיד',
@@ -170,7 +172,7 @@ export const AllStudent = () => {
         setSelectAll(checked);
         setSelectedStudents(
             students.reduce((acc, student) => {
-                acc[student.id] = checked;
+                acc[student.id!] = checked;
                 return acc;
             }, {} as { [id: string]: boolean })
         );
@@ -229,6 +231,7 @@ export const AllStudent = () => {
                         הוספת תלמיד
                     </Button>
                     <ExportAllStudentToExcel></ExportAllStudentToExcel>
+                    <AddStudentsFromExcel></AddStudentsFromExcel>
                 </Box>
 
                 <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: 3 }}>
@@ -254,43 +257,44 @@ export const AllStudent = () => {
                                     <TableRow hover>
                                         <TableCell align="right">
                                             <IconButton color="primary" aria-label="ערוך תלמיד"
-                                            onClick={()=>handleUpdateStudent(student)}>
+                                                onClick={() => handleUpdateStudent(student)}>
                                                 <EditIcon />
-                                            </IconButton>                                            
-                                            <IconButton color="error" aria-label="מחק תלמיד" onClick={() => handleDeleteStudent(student.id)}>
+                                            </IconButton>
+                                            <IconButton color="error" aria-label="מחק תלמיד" onClick={() => handleDeleteStudent(student.id!)}>
                                                 <DeleteOutline />
                                             </IconButton>
                                             <IconButton
                                                 color="primary"
                                                 aria-label="הצג פרטים"
-                                                onClick={() => toggleDetails(student.id)}
+                                                onClick={() => toggleDetails(student.id!)}
                                             >
-                                                {openDetails[student.id] ? <Remove /> : <ExpandMore />}
-                                            </IconButton>                                         
+                                                {openDetails[student.id!] ? <Remove /> : <ExpandMore />}
+                                            </IconButton>
                                         </TableCell>
                                         <TableCell align="right">{getStudentType(student)}</TableCell>
-                                        <TableCell align="right">{new Date(student.birthDate).toLocaleDateString()}</TableCell>
-                                        <TableCell align="right">{student.tz}</TableCell>
+                                        <TableCell align="right">
+                                            {moment(student.birthDate!).format('DD/MM/YYYY')}
+                                        </TableCell>                                        <TableCell align="right">{student.tz}</TableCell>
                                         <TableCell align="right">{student.firstName}</TableCell>
                                         <TableCell align="right">{student.lastName}</TableCell>
                                         {isMultiSelectActive && (
                                             <TableCell align="center">
                                                 <Checkbox
-                                                    checked={!!selectedStudents[student.id]}
-                                                    onChange={() => handleToggleStudent(student.id)}
+                                                    checked={!!selectedStudents[student.id!]}
+                                                    onChange={() => handleToggleStudent(student.id!)}
                                                     color="primary"
                                                 />
                                             </TableCell>
                                         )}
-                                    </TableRow>                                   
+                                    </TableRow>
                                     <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={100}>
-                                            <StudentDetails
-                                                student={student}
-                                                isOpen={openDetails[student.id] || false}
-                                            />
-                                        </TableCell>
+                                        <StudentDetails
+                                            student={student}
+                                            isOpen={openDetails[student.id!] || false}
+                                        />
+                                    </TableCell>
                                 </React.Fragment>
-                            ))}                            
+                            ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
