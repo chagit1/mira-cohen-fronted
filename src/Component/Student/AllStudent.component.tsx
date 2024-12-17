@@ -210,7 +210,6 @@ export const AllStudent = () => {
         }
     };
 
-
     return <>
         <>
             <Box sx={{ padding: 3 }}>
