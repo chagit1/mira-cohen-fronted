@@ -1,0 +1,57 @@
+{
+  "student":{
+    "firstName": "שם פרטי",
+    "lastName": "שם משפחה",
+    "birthDate": "תאריך לידה",
+    "tz": "תעודת זהות",
+    "fatherName": "שם האב",
+    "motherName": "שם האם",
+    "fatherPhone": "טלפון האב",
+    "motherPhone": "טלפון האם",
+    "homePhone": "טלפון בית",
+    "address": "כתובת",
+    "familyPosition": "מיקום במשפחה",
+    "gradeLevel": "שכבת כיתה"
+  },
+    "students": [
+      {
+        "id": 1,
+        "name": "Student A",
+        "behavior": "Good",
+        "academicSkills": "High",
+        "socialSkills": "Average"
+      },
+      {
+        "id": 2,
+        "name": "Student B",
+        "behavior": "Average",
+        "academicSkills": "Medium",
+        "socialSkills": "High"
+      }
+    ],
+    "parentReport":
+    {
+      "strengthArea": "אזורי כוח",
+      "birthProcessAndEarlyDevelopment": "תהליך לידה והתפתחות מוקדמת",
+      "weaning": "גמילה",
+      "preSchoolEducation": "חינוך קדם בית ספרי",
+      "ParamedicalSupport": "תמיכה פרא-רפואית",
+      "PreSchoolDifficulties": "קשיים בגיל הרך",
+      "elementaryEducation": "חינוך יסודי",
+      "readingAndWritingDevelopment": "התפתחות קריאה וכתיבה",
+      "understandingInstructions": "הבנת הוראות",
+      "elementarySchoolDifficulties": "קשיים בבית ספר יסודי",
+      "academicDifficulties": "קשיים לימודיים",
+      "socialAndEmotionalDifficulties": "קשיים חברתיים ורגשיים",
+      "wasWithoutFramework": "היה ללא מסגרת",
+      "currentAcademicStatus": "מצב לימודי נוכחי",
+      "currentReadingGap": "פערים בקריאה",
+      "currentWritingGap": "פערים בכתיבה",
+      "currentMotivationGap": "פער נוכחי במוטיבציה",
+      "currentSocialGap": "פערים חברתים",
+      "currentEmotionalGap": "פערים רגשים",
+      "currentCulturalAndLeisureGap": "פערים בתרבות ופנאי"
+    }
+    
+  }
+  

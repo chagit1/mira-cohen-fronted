@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/mira_cohen_fronted/static/css/main.41e74255.css",
+    "main.js": "/mira_cohen_fronted/static/js/main.83aa7041.js",
+    "static/js/453.68693753.chunk.js": "/mira_cohen_fronted/static/js/453.68693753.chunk.js",
+    "static/media/primeicons.svg": "/mira_cohen_fronted/static/media/primeicons.e1441b135b3ca9ad643c.svg",
+    "static/media/Inter-italic.var.woff2?v=3.19": "/mira_cohen_fronted/static/media/Inter-italic.var.30807be7abc48ba8c73c.woff2",
+    "static/media/Inter-roman.var.woff2?v=3.19": "/mira_cohen_fronted/static/media/Inter-roman.var.ba4caefcdf5b36b438db.woff2",
+    "static/media/primeicons.eot": "/mira_cohen_fronted/static/media/primeicons.d44157bdfa026dc877af.eot",
+    "static/media/primeicons.woff": "/mira_cohen_fronted/static/media/primeicons.10d3152104f2208ac82a.woff",
+    "static/media/primeicons.ttf": "/mira_cohen_fronted/static/media/primeicons.ea5358601d0a3fd6670b.ttf",
+    "static/media/primeicons.woff2": "/mira_cohen_fronted/static/media/primeicons.78172950b335ccdb94e2.woff2",
+    "index.html": "/mira_cohen_fronted/index.html",
+    "main.41e74255.css.map": "/mira_cohen_fronted/static/css/main.41e74255.css.map",
+    "main.83aa7041.js.map": "/mira_cohen_fronted/static/js/main.83aa7041.js.map",
+    "453.68693753.chunk.js.map": "/mira_cohen_fronted/static/js/453.68693753.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.41e74255.css",
+    "static/js/main.83aa7041.js"
+  ]
+}
