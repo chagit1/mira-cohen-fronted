@@ -4,7 +4,7 @@ import { AddStudent } from "./AddStudents/AddStudent.component";
 import { Box, Button, Checkbox, Collapse, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { AddIcCallOutlined, AutoDeleteOutlined, ChevronLeft, ChevronRight, DeleteForeverRounded, DeleteOutline, DeleteOutlineRounded, DeleteSharp, DeleteSweep, DisplaySettings, Edit, EditNotifications, EditOutlined, ExpandMore, PlusOneOutlined, Remove } from "@mui/icons-material";
-import { getAllHelpHoutsStudent, getAllStudent } from "../../Api/HelpHours.api";
+import { getAllHelpHoutsStudent } from "../../Api/HelpHours.api";
 import { error } from "console";
 import { Student } from "../../Model/Student.model";
 import { HelpHours } from "../../Model/HelpHours.model";
@@ -20,7 +20,7 @@ import { addStudent, deleteStudent, setAllStudents } from "../../Redux/Student/S
 import DeleteIcon from '@mui/icons-material/Delete'; // אייקון פח
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { deleteStudentApi } from "../../Api/Student.api";
+import { deleteStudentApi, getAllStudent } from "../../Api/Student.api";
 import StudentDetails from "./StudentDetails.component";
 import ExportAllStudentToExcel from "./ExportToExcel/ExportAllStudentToExcel.component";
 import { UpdateStudent } from "./UpdateStudent.component";
@@ -31,7 +31,6 @@ export const AllStudent = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const currentUser = useSelector((state: { user: { currentUser: User } }) => state.user.currentUser);
-    const allStudentState = useSelector((state: { student: { allStudent: { [key: string]: Student[] } } }) => state.student);
     const [isMultiSelectActive, setIsMultiSelectActive] = useState(false); // משתנה למעקב אחרי מצב בחירה מרובה
     const [openDetails, setOpenDetails] = useState<{ [id: string]: boolean }>({});
     const [students, setStudents] = useState<Student[]>([]);
@@ -52,14 +51,19 @@ export const AllStudent = () => {
             setOpenDetails({});
         }
     };
+    const allStudentState = useSelector((state: { student: { allStudent: { [key: string]: Student[] } } }) => state.student);
 
-    useEffect(() => {
-        if (allStudentState == undefined) {
+
+    useEffect(() => {     
+        console.log(students);
+            if (allStudentState) {
+            setStudents(Object.values(allStudentState.allStudent).flat());
+        }
+        else{
             getAllStudent()
                 .then((x) => {
                     const data = x.data;
                     const studentsArray = data.$values ? data.$values : [];
-
                     dispatch(setAllStudents(studentsArray));
                     setStudents(studentsArray);
                 })
@@ -68,16 +72,19 @@ export const AllStudent = () => {
                     setStudents([]);
                 });
         }
-        else
-            setStudents(Object.values(allStudentState.allStudent).flat());
+    console.log(students);
         setShouldReload(false);
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
 
-    }, [students]);
+    }, [shouldReload, allStudentState]);
 
+    // פונקציה שמעדכנת את הטבלה
+    const handleReloadTable = () => {
+        setShouldReload(true);
+    };
 
     const handleAddStudent = () => {
         Swal.fire({
@@ -91,18 +98,17 @@ export const AllStudent = () => {
                 if (container) {
                     ReactDOM.render(
                         <Provider store={store}>
-                            <AddStudent
-                            ></AddStudent>
+                            <AddStudent onActionComplete={handleReloadTable}></AddStudent>                            
                             {/* // <ProviderWrapper userId={userId} />, */}
                         </Provider>,
                         container
-                    );
+                    );                   
                 }
             },
             didClose: () => {
                 setShouldReload(true)
             }
-        })
+        })        
     }
 
     const handleDeleteStudent = (id: string) => {
@@ -130,6 +136,7 @@ export const AllStudent = () => {
                                 }
                             });
                             dispatch(deleteStudent(id))
+                            setShouldReload(true);
                         })
                         .catch((err) => {
                             Swal.fire('Error', 'שגיאה במחיקת התלמיד', 'error');
@@ -210,7 +217,6 @@ export const AllStudent = () => {
         }
     };
 
-
     return <>
         <>
             <Box sx={{ padding: 3 }}>
@@ -231,7 +237,7 @@ export const AllStudent = () => {
                         הוספת תלמיד
                     </Button>
                     <ExportAllStudentToExcel></ExportAllStudentToExcel>
-                    <AddStudentsFromExcel></AddStudentsFromExcel>
+                    <AddStudentsFromExcel onActionComplete={handleReloadTable}></AddStudentsFromExcel>
                 </Box>
 
                 <TableContainer component={Paper} sx={{ borderRadius: "10px", boxShadow: 3 }}>
