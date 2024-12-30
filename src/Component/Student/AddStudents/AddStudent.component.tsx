@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 import { addStudent, setAllStudents } from "../../../Redux/Student/Student.Action";
 import { FamilyStatus } from "../../../Model/TeacherReport.model";
 
-export const AddStudent = () => {
+export const AddStudent = ({ onActionComplete }: { onActionComplete: () => void }) => {
     debugger
     const dispatch = useDispatch();
     const allStudentState = useSelector((state: { student: { allStudent: { [key: string]: Student[] } } }) => state.student);
@@ -100,7 +100,6 @@ export const AddStudent = () => {
 
     useEffect(() => {
         setIsHelpHours(false)
-
     }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,6 +135,9 @@ export const AddStudent = () => {
             addAdditionalHoursStudent(helpHours!)
                 .then((x) => {
                     dispatch(setAllStudents(x.data))
+                    if (onActionComplete) {
+                        onActionComplete();
+                    }
                     MySwal.fire({
                         title: 'success',
                         text: 'התלמיד נוסף בהצלחה',
@@ -170,7 +172,7 @@ export const AddStudent = () => {
                     Swal.fire('Error', 'שגיאה בהוספת התלמיד', 'error');
                 });
         }
-
+     
     };
 
     return <>

@@ -14,38 +14,14 @@ import { setAllStudents } from "../../../Redux/Student/Student.Action";
 import moment from "moment";
 import { Button, IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
 
-const AddStudentsFromExcel = () => {
-    const [helpeHoursStudents, setHelpeHoursStudents] = useState<HelpHours[]>([]);
+const AddStudentsFromExcel = ({ onActionComplete }: { onActionComplete: () => void }) => {
     const [eligibility, setEligibility] = useState<EligibilityAndCharacterization[]>([]);
 
     const [fileName, setFileName] = useState<string>("");
-    // const [typeStudent, setTypeStudent] = useState<string>("");
-    // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    // const [isTypeSelected, setIsTypeSelected] = useState<boolean>(false);
-
     const dispatch = useDispatch();
     const studentTranslations = data.student;
     const MySwal = withReactContent(Swal);
 
-    // const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    //     setAnchorEl(event.currentTarget);
-    //   };
-    
-      // פונקציה לסגירת התפריט
-    //   const handleMenuClose = () => {
-    //     setAnchorEl(null);
-    //   };
-    
-    //   const handleTypeSelection = (type: string) => {
-    //     setTypeStudent(type);
-    //     setIsTypeSelected(true);
-    //     handleMenuClose();
-    //   };
-
-    // const handleTypeSelection = (type: string) => {
-    //     setTypeStudent(type);
-    //     setIsTypeSelected(true);
-    // };
     const excelSerialToDate = (serial: number): Date => {
         const excelEpoch = new Date(1900, 0, 1); // 1 בינואר 1900
         const fixedSerial = serial - 1;
@@ -69,7 +45,6 @@ const AddStudentsFromExcel = () => {
         return new Date();
     }
     const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>, typeStudent: string) => {
-    // const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         debugger
         const file = event.target.files?.[0];
         if (file) {
@@ -116,13 +91,16 @@ const AddStudentsFromExcel = () => {
                                 dispatch(setAllStudents(x.data))
                                 MySwal.fire({
                                     title: 'success',
-                                    text: 'התלמיד נוסף בהצלחה',
+                                    text: 'התלמידים נוספו בהצלחה',
                                     icon: 'success',
                                     confirmButtonText: 'אישור',
                                     customClass: {
                                         confirmButton: 'my-confirm-button'
                                     }
                                 });
+                                if (onActionComplete) {
+                                    onActionComplete();
+                                }
                             })
                             .catch(err => {
                                 Swal.fire('Error', 'שגיאה בהוספת התלמיד', 'error');
@@ -168,6 +146,9 @@ const AddStudentsFromExcel = () => {
                                         confirmButton: 'my-confirm-button'
                                     }
                                 });
+                                if (onActionComplete) {
+                                    onActionComplete();
+                                }
                             })
                             .catch(err => {
                                 Swal.fire('Error', 'שגיאה בהוספת התלמידים', 'error');
